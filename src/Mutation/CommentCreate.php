@@ -35,7 +35,9 @@ class CommentCreate {
 	public static function get_input_fields() {
 		return [
 			'commentOn'   => [
-				'type'        => 'Int',
+				'type'        => [
+					'non_null' => 'ID',
+				],
 				'description' => __( 'The ID of the post object the comment belongs to.', 'wp-graphql' ),
 			],
 			'author'      => [
