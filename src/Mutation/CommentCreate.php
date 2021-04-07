@@ -41,11 +41,11 @@ class CommentCreate {
 				'description' => __( 'The ID of the post object the comment belongs to.', 'wp-graphql' ),
 			],
 			'author'      => [
-				'type'        => 'String',
+				'type'        => boolval( get_option( 'require_name_email' ) ) ? [ 'non_null' => 'String' ] : 'String',
 				'description' => __( 'The name of the comment\'s author.', 'wp-graphql' ),
 			],
 			'authorEmail' => [
-				'type'        => 'String',
+				'type'        => boolval( get_option( 'require_name_email' ) ) ? [ 'non_null' => 'String' ] : 'String',
 				'description' => __( 'The email of the comment\'s author.', 'wp-graphql' ),
 			],
 			'authorUrl'   => [
@@ -146,8 +146,8 @@ class CommentCreate {
 			}
 
 			if ( '1' === get_option( 'require_name_email' ) && ( empty( $input['author'] ) || empty( $input['authorEmail'] ) ) ) {
-				throw new UserError( __( "This site requires you to provide a name and email address leave a comment", 'wp-graphql' ) );
-			} 
+				throw new UserError( __( 'This site requires you to provide a name and email address leave a comment', 'wp-graphql' ) );
+			}
 
 			/**
 			 * Map all of the args from GraphQL to WordPress friendly args array
